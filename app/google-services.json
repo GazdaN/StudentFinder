@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1009460553515",
+    "firebase_url": "https://studentfinder-3e472.firebaseio.com",
+    "project_id": "studentfinder-3e472",
+    "storage_bucket": "studentfinder-3e472.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009460553515:android:e2fe3c93a89f5a08",
+        "android_client_info": {
+          "package_name": "com.umikowicze.studentfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009460553515-ggethkndf7doc8i00lq5o3snb5sq8vu8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umikowicze.studentfinder",
+            "certificate_hash": "3a038d8a6ec8f10244a4d0bd46440118c75fbbe6"
+          }
+        },
+        {
+          "client_id": "1009460553515-fsgm6rv76ch62ev4krgmqd1nr0l8aq6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2GeeMs-wEx0Qw_b1rwP2Bqq7cyzIcpf4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009460553515-fsgm6rv76ch62ev4krgmqd1nr0l8aq6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
