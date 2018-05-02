@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1009460553515-10u022tufhroop7r26nu4vslr0j3tiia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umikowicze.studentfinder",
+            "certificate_hash": "870c8b496506e2d15acb8fc8ac10608942e34b29"
+          }
+        },
+        {
           "client_id": "1009460553515-ggethkndf7doc8i00lq5o3snb5sq8vu8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
