@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
             sendToStart();
         }
 
+        else if(item.getItemId() == R.id.mainMenuSearchForHelpButton)
+        {
+            Intent intent = new Intent(MainActivity.this, HelpBrowserActivity.class);
+            startActivity(intent);
+        }
+
         return true;
     }
 
