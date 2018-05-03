@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".AccountSettingsActivity">
+
+    <TextView
+        android:id="@+id/displayNameTextView"
+        android:layout_width="258dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Display name"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/changeDisplayNameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:text="@string/change_name_button" />
+
+    <Button
+        android:id="@+id/changeImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="114dp"
+        android:text="Change image" />
+
+</RelativeLayout>
