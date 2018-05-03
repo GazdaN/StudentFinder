@@ -6,4 +6,7 @@
     <string name="email_input_hint">Email</string>
     <string name="password_input_hint">Password</string>
     <string name="log_out_button_text">Log Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

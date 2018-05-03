@@ -82,6 +82,8 @@ public class StartActivity extends AppCompatActivity {
                     mLoginProgress.dismiss();
 
                     Intent mainIntent = new Intent(StartActivity.this, MainActivity.class);
+                    //It clears all previous tasks -> when you go back form main screen you will close app, you won't come back to WelcomeScreen.
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(mainIntent);
                     finish();
                 }
