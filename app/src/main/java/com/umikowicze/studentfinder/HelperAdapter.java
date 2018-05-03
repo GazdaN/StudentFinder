@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.Console;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -40,6 +42,8 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
         Helper helper = getItem(position);
 
         nameTextView.setText(helper.getName());
+
+        Glide.with(photoImageView.getContext()).load(helper.getPhotoUrl()).into(photoImageView);
 
         if (helper.getLocation()) {
             onlineImageView.setImageResource(android.R.drawable.presence_online);
