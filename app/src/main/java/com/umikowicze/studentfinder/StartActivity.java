@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+
+//WelcomPage for students - place where you can login or make a new account
 public class StartActivity extends AppCompatActivity {
 
     private Button mRegisterButton;
