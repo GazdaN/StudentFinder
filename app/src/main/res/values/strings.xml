@@ -5,4 +5,5 @@
     <string name="main_page">Main page</string>
     <string name="email_input_hint">Email</string>
     <string name="password_input_hint">Password</string>
+    <string name="log_out_button_text">Log Out</string>
 </resources>

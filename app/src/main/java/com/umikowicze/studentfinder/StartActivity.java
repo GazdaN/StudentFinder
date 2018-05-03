@@ -38,8 +38,8 @@ public class StartActivity extends AppCompatActivity {
 
         mRegisterButton = findViewById(R.id.registerButton);
         mLoginButton = findViewById(R.id.loginButton);
-        mEmailInput = (TextInputEditText ) findViewById(R.id.emailTextLayout);
-        mPasswdInput = (TextInputEditText ) findViewById(R.id.passwordTextLayout);
+        mEmailInput =  findViewById(R.id.emailTextLayout);
+        mPasswdInput = findViewById(R.id.passwordTextLayout);
 
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
                 String email = mEmailInput.getText().toString();
                 String password = mPasswdInput.getText().toString();
 
-                if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password))
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password))
                 {
 
                     mLoginProgress.setTitle("Logging in");
