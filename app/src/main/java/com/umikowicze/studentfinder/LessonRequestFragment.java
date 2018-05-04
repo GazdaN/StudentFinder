@@ -61,13 +61,54 @@ public class LessonRequestFragment extends Fragment {
         requestListView = view.findViewById(R.id.requestListView);
         requestListView.setAdapter(helpRequestAdapter);
 
+        getRequestsToProcess();
+
+        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final int position = i;
+                HelpRequest helpRequest = (HelpRequest) adapterView.getItemAtPosition(i);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setTitle("Pomoc w: " + helpRequest.getArea());
+                builder.setMessage("Czy chcesz pomóc użytkownikowi " + requestersIDs.get(Integer.toString(position)) + "?");
+
+                builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatabaseReference.child("HelpRequests").child(requestsKeys.get(Integer.toString(position)))
+                                .child("status").setValue("Active");
+                        getRequestsToProcess();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+        return view;
+    }
+
+    public void getRequestsToProcess() {
+        helpRequestAdapter.clear();
         Query query = mDatabaseReference.child("HelpRequests");
-        System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    System.out.println(dataSnapshot.getChildrenCount());
                     for (DataSnapshot dss : dataSnapshot.getChildren()) {
                         HelpRequest helpRequest = dss.getValue(HelpRequest.class);
                         if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) &&
@@ -101,43 +142,5 @@ public class LessonRequestFragment extends Fragment {
 
             }
         });
-
-        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final int position = i;
-                HelpRequest helpRequest = (HelpRequest) adapterView.getItemAtPosition(i);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-                builder.setTitle("Pomoc w: " + helpRequest.getArea());
-                builder.setMessage("Czy chcesz pomóc użytkownikowi " + requestersIDs.get(Integer.toString(position)) + "?");
-
-                builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        mDatabaseReference.child("HelpRequests").child(requestsKeys.get(Integer.toString(position)))
-                                .child("status").setValue("Active");
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-        return view;
     }
-
 }
