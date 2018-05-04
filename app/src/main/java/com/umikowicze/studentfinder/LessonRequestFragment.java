@@ -1,13 +1,17 @@
 package com.umikowicze.studentfinder;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -29,6 +34,8 @@ public class LessonRequestFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private ListView requestListView;
     private HelpRequestAdapter helpRequestAdapter;
+    private HashMap<String, String> requestersIDs;
+    private HashMap<String, String> requestsKeys;
 
 
     public LessonRequestFragment() {
@@ -45,22 +52,45 @@ public class LessonRequestFragment extends Fragment {
         mFirebaseReference = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseReference.getReference();
 
+        requestersIDs = new HashMap<String, String>();
+        requestsKeys = new HashMap<String, String>();
+
         final List<HelpRequest> helpRequestList = new ArrayList<HelpRequest>();
         helpRequestAdapter = new HelpRequestAdapter(getActivity(), R.layout.item_help_request, helpRequestList);
 
         requestListView = view.findViewById(R.id.requestListView);
         requestListView.setAdapter(helpRequestAdapter);
 
-        Query query = mDatabaseReference.child("HelpRequest");
+        Query query = mDatabaseReference.child("HelpRequests");
+        System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    System.out.println(dataSnapshot.getChildrenCount());
                     for (DataSnapshot dss : dataSnapshot.getChildren()) {
                         HelpRequest helpRequest = dss.getValue(HelpRequest.class);
                         if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) &&
                                 helpRequest.getStatus().equals("Sent")) {
                             helpRequestAdapter.add(helpRequest);
+                            requestsKeys.put(Integer.toString(helpRequestAdapter.getCount() - 1), dss.getKey());
+                            Query query2 = mDatabaseReference.child("Helpers").orderByKey().equalTo(helpRequest.getRequesterid());
+                            query2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot dss2 : dataSnapshot.getChildren()) {
+                                            final Helper helper = dss2.getValue(Helper.class);
+                                            requestersIDs.put(Integer.toString(helpRequestAdapter.getCount() - 1), helper.getName());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 }
@@ -69,6 +99,41 @@ public class LessonRequestFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final int position = i;
+                HelpRequest helpRequest = (HelpRequest) adapterView.getItemAtPosition(i);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setTitle("Pomoc w: " + helpRequest.getArea());
+                builder.setMessage("Czy chcesz pomóc użytkownikowi " + requestersIDs.get(Integer.toString(position)) + "?");
+
+                builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatabaseReference.child("HelpRequests").child(requestsKeys.get(Integer.toString(position)))
+                                .child("status").setValue("Active");
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
 
