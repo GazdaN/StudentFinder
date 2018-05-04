@@ -44,7 +44,6 @@ public class Helper {
     }
 
     public double getRating() {
-        System.out.println(stars + " " + ratings*5);
         double rating = (double) stars / (ratings*5);
         return rating;
     }
