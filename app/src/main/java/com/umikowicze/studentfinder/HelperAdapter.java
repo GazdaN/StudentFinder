@@ -55,46 +55,46 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
         }
 
         if (helper.getRating() < 0.1) {
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star1ImageView.setImageResource(R.drawable.star16_2);
+            star2ImageView.setImageResource(R.drawable.star16_2);
+            star3ImageView.setImageResource(R.drawable.star16_2);
+            star4ImageView.setImageResource(R.drawable.star16_2);
+            star5ImageView.setImageResource(R.drawable.star16_2);
         }
         else if (helper.getRating() >= 0.1 && helper.getRating() < 0.3) {
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star1ImageView.setImageResource(R.drawable.star16);
+            star2ImageView.setImageResource(R.drawable.star16_2);
+            star3ImageView.setImageResource(R.drawable.star16_2);
+            star4ImageView.setImageResource(R.drawable.star16_2);
+            star5ImageView.setImageResource(R.drawable.star16_2);
         }
         else if (helper.getRating() >= 0.3 && helper.getRating() < 0.5) {
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star1ImageView.setImageResource(R.drawable.star16);
+            star2ImageView.setImageResource(R.drawable.star16);
+            star3ImageView.setImageResource(R.drawable.star16_2);
+            star4ImageView.setImageResource(R.drawable.star16_2);
+            star5ImageView.setImageResource(R.drawable.star16_2);
         }
         else if (helper.getRating() >= 0.5 && helper.getRating() < 0.7) {
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star1ImageView.setImageResource(R.drawable.star16);
+            star2ImageView.setImageResource(R.drawable.star16);
+            star3ImageView.setImageResource(R.drawable.star16);
+            star4ImageView.setImageResource(R.drawable.star16_2);
+            star5ImageView.setImageResource(R.drawable.star16_2);
         }
         else if (helper.getRating() >= 0.7 && helper.getRating() < 0.9) {
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star1ImageView.setImageResource(R.drawable.star16);
+            star2ImageView.setImageResource(R.drawable.star16);
+            star3ImageView.setImageResource(R.drawable.star16);
+            star4ImageView.setImageResource(R.drawable.star16);
+            star5ImageView.setImageResource(R.drawable.star16_2);
         }
         else if (helper.getRating() >= 0.9) {
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
-            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(R.drawable.star16);
+            star2ImageView.setImageResource(R.drawable.star16);
+            star3ImageView.setImageResource(R.drawable.star16);
+            star4ImageView.setImageResource(R.drawable.star16);
+            star5ImageView.setImageResource(R.drawable.star16);
         }
 
         return convertView;

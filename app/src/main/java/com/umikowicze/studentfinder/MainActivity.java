@@ -1,6 +1,7 @@
 package com.umikowicze.studentfinder;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +9,19 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private TabLayout mTabLayout;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseReference;
+    private ListView requestListView;
+    private HelpRequestAdapter helpRequestAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +54,38 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("StudentFinder");
+
+        /*
+        mFirebaseReference = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseReference.getReference();
+
+        final List<HelpRequest> helpRequestList = new ArrayList<HelpRequest>();
+        helpRequestAdapter = new HelpRequestAdapter(this, R.layout.item_help_request, helpRequestList);
+
+        requestListView = findViewById(R.id.requestListView);
+        requestListView.setAdapter(helpRequestAdapter);
+
+        Query query = mDatabaseReference.child("HelpRequest");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
+                        HelpRequest helpRequest = dss.getValue(HelpRequest.class);
+                        if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) &&
+                                helpRequest.getStatus().equals("Sent")) {
+                            helpRequestAdapter.add(helpRequest);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        */
     }
 
     @Override
