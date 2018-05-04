@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.Console;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,6 +43,8 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
 
         nameTextView.setText(helper.getName());
 
+        Glide.with(photoImageView.getContext()).load(helper.getPhotoUrl()).into(photoImageView);
+
         if (helper.getLocation()) {
             onlineImageView.setImageResource(android.R.drawable.presence_online);
             onlineTextView.setText("Dostępny w pobliżu wydziału");
@@ -51,39 +55,46 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
         }
 
         if (helper.getRating() < 0.1) {
-            star1ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star2ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star3ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star4ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.btn_star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+        }
+        else if (helper.getRating() >= 0.1 && helper.getRating() < 0.3) {
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
         }
         else if (helper.getRating() >= 0.3 && helper.getRating() < 0.5) {
-            star1ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star2ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star3ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star4ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.btn_star_big_off);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
         }
         else if (helper.getRating() >= 0.5 && helper.getRating() < 0.7) {
-            star1ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star2ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star3ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star4ImageView.setImageResource(android.R.drawable.btn_star_big_off);
-            star5ImageView.setImageResource(android.R.drawable.btn_star_big_off);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
         }
         else if (helper.getRating() >= 0.7 && helper.getRating() < 0.9) {
-            star1ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star2ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star3ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star4ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.btn_star_big_off);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star5ImageView.setImageResource(android.R.drawable.star_big_off);
         }
         else if (helper.getRating() >= 0.9) {
-            star1ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star2ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star3ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star4ImageView.setImageResource(android.R.drawable.btn_star_big_on);
-            star5ImageView.setImageResource(android.R.drawable.btn_star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
+            star1ImageView.setImageResource(android.R.drawable.star_big_on);
         }
 
         return convertView;

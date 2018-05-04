@@ -6,16 +6,17 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photoImageView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_margin="4dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -43,9 +44,8 @@
 
             <TextView
                 android:id="@+id/onlineTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Dostępny na uczelni"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -61,36 +61,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@android:drawable/star_big_on" />
 
             <ImageView
                 android:id="@+id/star2ImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@android:drawable/star_big_on" />
 
             <ImageView
                 android:id="@+id/star3ImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@android:drawable/star_big_on" />
 
             <ImageView
                 android:id="@+id/star4ImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@android:drawable/star_big_on" />
 
             <ImageView
                 android:id="@+id/star5ImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-
+                app:srcCompat="@android:drawable/star_big_on" />
         </LinearLayout>
     </LinearLayout>
 
