@@ -54,38 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("StudentFinder");
-
-        /*
-        mFirebaseReference = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseReference.getReference();
-
-        final List<HelpRequest> helpRequestList = new ArrayList<HelpRequest>();
-        helpRequestAdapter = new HelpRequestAdapter(this, R.layout.item_help_request, helpRequestList);
-
-        requestListView = findViewById(R.id.requestListView);
-        requestListView.setAdapter(helpRequestAdapter);
-
-        Query query = mDatabaseReference.child("HelpRequest");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
-                        HelpRequest helpRequest = dss.getValue(HelpRequest.class);
-                        if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) &&
-                                helpRequest.getStatus().equals("Sent")) {
-                            helpRequestAdapter.add(helpRequest);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        */
+        
     }
 
     @Override
