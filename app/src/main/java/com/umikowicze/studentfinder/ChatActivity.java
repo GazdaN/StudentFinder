@@ -213,6 +213,9 @@ public class ChatActivity extends AppCompatActivity {
             messageMap.put("seen",false);
             messageMap.put("type","text");
             messageMap.put("time",ServerValue.TIMESTAMP);
+            messageMap.put("from", mCurrentUserID);
+
+            mNewMessageText.setText("");
 
             Map messageUserMap = new HashMap();
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
