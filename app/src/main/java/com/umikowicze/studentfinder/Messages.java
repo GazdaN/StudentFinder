@@ -10,22 +10,6 @@ public class Messages {
         this.message = message;
     }
 
-    public String getSeen() {
-        return seen;
-    }
-
-    public void setSeen(String seen) {
-        this.seen = seen;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public String getType() {
         return type;
     }
@@ -34,12 +18,30 @@ public class Messages {
         this.type = type;
     }
 
-    private String message, seen, time, type;
+    public long getTime() {
+        return time;
+    }
 
-    public Messages(String message, String seen, String time, String type) {
-        this.message = message;
-        this.seen = seen;
+    public void setTime(long time) {
         this.time = time;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
+
+    private String message,  type;
+    private long time;
+    private boolean seen;
+
+    public Messages(String message, String type, long time, boolean seen) {
+        this.message = message;
         this.type = type;
+        this.time = time;
+        this.seen = seen;
     }
 }

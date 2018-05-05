@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,6 +48,9 @@ public class ChatActivity extends AppCompatActivity {
     private  String mCurrentUserID;
     //Stuff for receiving messages
     private RecyclerView mMessageList;
+    private final List<Messages> messagesList = new ArrayList<>();
+    private LinearLayoutManager mLinearLayout;
+    private MessageAdapter mMessageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +93,17 @@ public class ChatActivity extends AppCompatActivity {
         mNewMessageText = findViewById(R.id.newMessageEditTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
         mSendMessageButton = findViewById(R.id.sendMessageButton);
+
+        //Stuff for receiving messages
+
+        mMessageAdapter = new MessageAdapter(messagesList);
         mMessageList = findViewById(R.id.messagesList);
+        mLinearLayout = new LinearLayoutManager(this);
+        mMessageList.setHasFixedSize(true);
+        mMessageList.setLayoutManager(mLinearLayout);
+        mMessageList.setAdapter(mMessageAdapter);
+
+        loadMessagesMethod();
 
         mRootReference.child("Chat").child(mCurrentUserID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,6 +154,42 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void loadMessagesMethod() {
+
+        mRootReference.child("Messages").child(mCurrentUserID).child(mChatUserId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                //Data form DataSnapshot will be provided to the set methods in Messages class
+                Messages messsage = dataSnapshot.getValue(Messages.class);
+                messagesList.add(messsage);
+                mMessageAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     //Sending new message
