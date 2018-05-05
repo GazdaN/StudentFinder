@@ -3,6 +3,7 @@ package com.umikowicze.studentfinder;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class LessonRequestFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final int position = i;
-                HelpRequest helpRequest = (HelpRequest) adapterView.getItemAtPosition(i);
+                final HelpRequest helpRequest = (HelpRequest) adapterView.getItemAtPosition(i);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
@@ -80,7 +81,13 @@ public class LessonRequestFragment extends Fragment {
                         mDatabaseReference.child("HelpRequests").child(requestsKeys.get(Integer.toString(position)))
                                 .child("status").setValue("Active");
                         getRequestsToProcess();
+
+                        Intent chatIntent = new Intent(getContext(),ChatActivity.class);
+                        chatIntent.putExtra("user_id",helpRequest.getRequesterid());
+                        startActivity(chatIntent);
                         dialog.dismiss();
+
+
                     }
                 });
 
