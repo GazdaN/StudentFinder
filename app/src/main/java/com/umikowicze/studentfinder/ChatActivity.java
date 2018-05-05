@@ -117,5 +117,61 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        mSendMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sendMessageMethod();
+
+            }
+        });
+
+        mAddStuffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+    private void sendMessageMethod() {
+
+        String message = mNewMessageText.getText().toString();
+
+        if(!message.isEmpty())
+        {
+            //Strings for HashMaps
+            String currentUserRef = "Messages/"+mCurrentUserID+"/"+mChatUserId;
+            String chatUserRef = "Messages/"+mChatUserId+"/"+mCurrentUserID;
+
+            //PushId is needed identify messages
+            DatabaseReference userMessagePush = mRootReference.child("Messages").child(mCurrentUserID).child(mChatUserId).push();
+            String pushId = userMessagePush.getKey();
+
+            //New hasMap in database - for message
+            Map messageMap = new HashMap();
+            messageMap.put("message",message );
+            messageMap.put("seen",false);
+            messageMap.put("type","text");
+            messageMap.put("time",ServerValue.TIMESTAMP);
+
+            Map messageUserMap = new HashMap();
+            messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
+            messageUserMap.put(chatUserRef+"/"+pushId,messageMap);
+
+            mRootReference.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if(databaseError != null)
+                    {
+                        Log.d("CHAT_LOG",databaseError.getMessage().toString());
+                    }
+                }
+            });
+
+
+        }
+
     }
 }
