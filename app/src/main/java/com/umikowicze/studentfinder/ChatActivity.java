@@ -1,6 +1,8 @@
 package com.umikowicze.studentfinder;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
@@ -51,6 +54,12 @@ public class ChatActivity extends AppCompatActivity {
     private final List<Messages> messagesList = new ArrayList<>();
     private LinearLayoutManager mLinearLayout;
     private MessageAdapter mMessageAdapter;
+    private static final int TOTAL_ITEMS_TO_LOAD = 10;
+    private int mCurrentPage = 1;
+    private SwipeRefreshLayout mRefreshMessages;
+    private int mitemPos = 0;
+    private String mLastKey =  "";
+    private String mPreviousKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +111,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessageList.setHasFixedSize(true);
         mMessageList.setLayoutManager(mLinearLayout);
         mMessageList.setAdapter(mMessageAdapter);
+        mRefreshMessages = findViewById(R.id.messageSwipeLayour);
 
         loadMessagesMethod();
 
@@ -154,19 +164,98 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        mRefreshMessages.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mCurrentPage++;
+                mitemPos = 0;
+                loadMoreMessagesMethod();
+            }
+        });
     }
 
-    private void loadMessagesMethod() {
+    private void loadMoreMessagesMethod(){
 
-        mRootReference.child("Messages").child(mCurrentUserID).child(mChatUserId).addChildEventListener(new ChildEventListener() {
+        DatabaseReference messageRef =  mRootReference.child("Messages").child(mCurrentUserID).child(mChatUserId);
+        Query messageQuery = messageRef.orderByKey().endAt(mLastKey).limitToLast(10);
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //Data form DataSnapshot will be provided to the set methods in Messages class
                 Messages messsage = dataSnapshot.getValue(Messages.class);
+                String messageKey = dataSnapshot.getKey();
+
+                if(!mPreviousKey.equals(messageKey) )
+                {
+                    messagesList.add(mitemPos++, messsage);
+                }
+                else
+                {
+                    mPreviousKey = mLastKey;
+                }
+
+                if(mitemPos==1)
+                {
+                    mLastKey = messageKey;
+                }
+
+                mMessageAdapter.notifyDataSetChanged();
+                mRefreshMessages.setRefreshing(false);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void loadMessagesMethod() {
+
+        DatabaseReference messageRef =  mRootReference.child("Messages").child(mCurrentUserID).child(mChatUserId);
+
+        Query messageQuery = messageRef.limitToLast(mCurrentPage * TOTAL_ITEMS_TO_LOAD);
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                //Data form DataSnapshot will be provided to the set methods in Messages class
+                Messages messsage = dataSnapshot.getValue(Messages.class);
+                mitemPos++;
+
+                if(mitemPos==1){
+                    mLastKey = dataSnapshot.getKey();
+                    mPreviousKey = dataSnapshot.getKey();
+                }
+
                 messagesList.add(messsage);
                 mMessageAdapter.notifyDataSetChanged();
 
+                mMessageList.scrollToPosition(messagesList.size()-1);
+
+                mRefreshMessages.setRefreshing(false);
             }
 
             @Override
