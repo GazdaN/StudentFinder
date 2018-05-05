@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mChatUsername = dataSnapshot.child("name").getValue().toString();
+                mDisplayName.setText(mChatUsername);
             }
 
             @Override
@@ -70,6 +71,5 @@ public class ChatActivity extends AppCompatActivity {
         mNewMessageText = findViewById(R.id.newMessageTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
         mSendMessageButton = findViewById(R.id.sendMessageButton);
-        mDisplayName.setText(mChatUsername);
     }
 }
