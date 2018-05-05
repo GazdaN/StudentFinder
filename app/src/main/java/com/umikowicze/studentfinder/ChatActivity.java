@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
@@ -41,6 +42,8 @@ public class ChatActivity extends AppCompatActivity {
     private CircleImageView mcircleImageView;
     private FirebaseAuth mAuth;
     private  String mCurrentUserID;
+    //Stuff for receiving messages
+    private RecyclerView mMessageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         mNewMessageText = findViewById(R.id.newMessageEditTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
         mSendMessageButton = findViewById(R.id.sendMessageButton);
+        mMessageList = findViewById(R.id.messagesList);
 
         mRootReference.child("Chat").child(mCurrentUserID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -135,6 +139,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //Sending new message
     private void sendMessageMethod() {
 
         String message = mNewMessageText.getText().toString();
