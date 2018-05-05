@@ -109,6 +109,11 @@ public class LessonRequestFragment extends Fragment {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+        getRequestsToProcess();
+    }
+
     public void getRequestsToProcess() {
         helpRequestAdapter.clear();
         Query query = mDatabaseReference.child("HelpRequests");

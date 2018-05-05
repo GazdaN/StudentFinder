@@ -25,8 +25,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -157,6 +159,9 @@ public class HelpBrowserActivity extends AppCompatActivity{
         final String area1 = area;
         final String requesterid1 = requesterid;
         final String helperid1 = helperid;
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm aa");
+        final String date = sdf.format(c.getTime());
         Query query = mDatabaseReference.child("HelpRequests");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -173,7 +178,6 @@ public class HelpBrowserActivity extends AppCompatActivity{
                         }
                     }
                     if (counter == 0) {
-                        final String date = DateFormat.getDateInstance().format(new Date());
                         HelpRequest newHelpRequest = new HelpRequest(area1, helperid1, requesterid1, "Sent", date);
                         mDatabaseReference.child("HelpRequests").push().setValue(newHelpRequest);
                         Toast.makeText(HelpBrowserActivity.this, "Wysłano prośbę o pomoc.", Toast.LENGTH_LONG).show();
