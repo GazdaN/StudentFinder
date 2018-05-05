@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,11 +34,7 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
         ImageView onlineImageView = convertView.findViewById(R.id.onlineImageView);
         TextView nameTextView = convertView.findViewById(R.id.nameTextView);
         TextView onlineTextView = convertView.findViewById(R.id.onlineTextView);
-        ImageView star1ImageView = convertView.findViewById(R.id.star1ImageView);
-        ImageView star2ImageView = convertView.findViewById(R.id.star2ImageView);
-        ImageView star3ImageView = convertView.findViewById(R.id.star3ImageView);
-        ImageView star4ImageView = convertView.findViewById(R.id.star4ImageView);
-        ImageView star5ImageView = convertView.findViewById(R.id.star5ImageView);
+        RatingBar ratingBar = convertView.findViewById(R.id.ratingBar);
 
         Helper helper = getItem(position);
 
@@ -54,48 +51,7 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
             onlineTextView.setText("Niedostępny");
         }
 
-        if (helper.getRating() < 0.1) {
-            star1ImageView.setImageResource(R.drawable.star16_2);
-            star2ImageView.setImageResource(R.drawable.star16_2);
-            star3ImageView.setImageResource(R.drawable.star16_2);
-            star4ImageView.setImageResource(R.drawable.star16_2);
-            star5ImageView.setImageResource(R.drawable.star16_2);
-        }
-        else if (helper.getRating() >= 0.1 && helper.getRating() < 0.3) {
-            star1ImageView.setImageResource(R.drawable.star16);
-            star2ImageView.setImageResource(R.drawable.star16_2);
-            star3ImageView.setImageResource(R.drawable.star16_2);
-            star4ImageView.setImageResource(R.drawable.star16_2);
-            star5ImageView.setImageResource(R.drawable.star16_2);
-        }
-        else if (helper.getRating() >= 0.3 && helper.getRating() < 0.5) {
-            star1ImageView.setImageResource(R.drawable.star16);
-            star2ImageView.setImageResource(R.drawable.star16);
-            star3ImageView.setImageResource(R.drawable.star16_2);
-            star4ImageView.setImageResource(R.drawable.star16_2);
-            star5ImageView.setImageResource(R.drawable.star16_2);
-        }
-        else if (helper.getRating() >= 0.5 && helper.getRating() < 0.7) {
-            star1ImageView.setImageResource(R.drawable.star16);
-            star2ImageView.setImageResource(R.drawable.star16);
-            star3ImageView.setImageResource(R.drawable.star16);
-            star4ImageView.setImageResource(R.drawable.star16_2);
-            star5ImageView.setImageResource(R.drawable.star16_2);
-        }
-        else if (helper.getRating() >= 0.7 && helper.getRating() < 0.9) {
-            star1ImageView.setImageResource(R.drawable.star16);
-            star2ImageView.setImageResource(R.drawable.star16);
-            star3ImageView.setImageResource(R.drawable.star16);
-            star4ImageView.setImageResource(R.drawable.star16);
-            star5ImageView.setImageResource(R.drawable.star16_2);
-        }
-        else if (helper.getRating() >= 0.9) {
-            star1ImageView.setImageResource(R.drawable.star16);
-            star2ImageView.setImageResource(R.drawable.star16);
-            star3ImageView.setImageResource(R.drawable.star16);
-            star4ImageView.setImageResource(R.drawable.star16);
-            star5ImageView.setImageResource(R.drawable.star16);
-        }
+        ratingBar.setRating((float)helper.getRating()*5);
 
         return convertView;
     }
