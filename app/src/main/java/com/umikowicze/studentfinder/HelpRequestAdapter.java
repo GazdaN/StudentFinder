@@ -22,6 +22,9 @@ import java.io.Console;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class HelpRequestAdapter extends ArrayAdapter<HelpRequest>{
@@ -64,7 +67,26 @@ public class HelpRequestAdapter extends ArrayAdapter<HelpRequest>{
                                                  }
                                              });
         areaTextView.setText(helpRequest.getArea());
-        dateTextView.setText(helpRequest.getDatetime());
+
+        Calendar requestDate = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm aa");
+        try {
+            requestDate.setTime(sdf.parse(helpRequest.getDatetime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar nowDate = Calendar.getInstance();
+        long diff = nowDate.getTimeInMillis() - requestDate.getTimeInMillis();
+        if (diff < 60 * 1000)
+            dateTextView.setText("Mniej niż minutę temu");
+        else if (diff >= 60 * 1000 && diff < 60 * 60 * 1000) {
+            int mins = (int) diff / 60000;
+            dateTextView.setText(mins + " min temu");
+        }
+        else if (diff >= 60 * 60 * 1000) {
+            int mins = (int) diff / 3600000;
+            dateTextView.setText(mins + " h temu");
+        }
 
         return convertView;
     }
