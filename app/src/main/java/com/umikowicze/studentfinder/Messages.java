@@ -34,21 +34,12 @@ public class Messages {
         this.type = type;
     }
 
-    public String getFrom() {
-        return from;
-    }
+    private String message, seen, time, type;
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    private String message, seen, time, type, from;
-
-    public Messages(String message, String seen, String time, String type, String from) {
+    public Messages(String message, String seen, String time, String type) {
         this.message = message;
         this.seen = seen;
         this.time = time;
         this.type = type;
-        this.from = from;
     }
 }
