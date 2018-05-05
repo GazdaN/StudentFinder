@@ -9,6 +9,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private  ActionBar actionBar;
     private String mChatUsername;
     private TextView mDisplayName;
-    private TextView mNewMessageText;
+    private EditText mNewMessageText;
     private ImageButton mAddStuffButton;
     private ImageButton mSendMessageButton;
     private CircleImageView mcircleImageView;
@@ -79,7 +80,7 @@ public class ChatActivity extends AppCompatActivity {
         actionBar.setCustomView(actionBarView);
         mcircleImageView = findViewById(R.id.customBarImage);
         mDisplayName = findViewById(R.id.displayNameCustomBar);
-        mNewMessageText = findViewById(R.id.newMessageTextView);
+        mNewMessageText = findViewById(R.id.newMessageEditTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
         mSendMessageButton = findViewById(R.id.sendMessageButton);
 
