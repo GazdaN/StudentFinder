@@ -24,11 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HelpBrowserActivity" />
         <activity android:name=".StartActivity" />
         <activity android:name=".AccountSettingsActivity" />
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".HelpBrowserActivity"
+            android:label="@string/title_activity_help_browser"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>
