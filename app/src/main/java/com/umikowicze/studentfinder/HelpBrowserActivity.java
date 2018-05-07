@@ -1,10 +1,12 @@
 package com.umikowicze.studentfinder;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -54,6 +56,11 @@ public class HelpBrowserActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_browser);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Search for help");
 
         mFirebaseReference = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseReference.getReference();
@@ -166,22 +173,22 @@ public class HelpBrowserActivity extends AppCompatActivity{
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    int counter = 0;
-                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
-                        final HelpRequest helpRequest = dss.getValue(HelpRequest.class);
-                        if (helpRequest.getArea().equals(area1) && helpRequest.getHelperid().equals(helperid1) && helpRequest.getRequesterid().equals(requesterid1)) {
-                            counter++;
-                            if (helpRequest.getStatus().equals("Sent"))
-                                Toast.makeText(HelpBrowserActivity.this, "Wysłałeś już taką prośbę o pomoc. Musisz poczekać na zaakceptowanie jej przez drugą osobę.", Toast.LENGTH_LONG).show();
-                            else if (helpRequest.getStatus().equals("Active"))
-                                Toast.makeText(HelpBrowserActivity.this, "Ta osoba udziela Ci już pomocy w tym obszarze. Jeżeli chcesz poprosić o kolejną, musisz zamknąć poprzednią prośbę.", Toast.LENGTH_LONG).show();
-                        }
+                int counter = 0;
+                for (DataSnapshot dss : dataSnapshot.getChildren()) {
+                    final HelpRequest helpRequest = dss.getValue(HelpRequest.class);
+                    if (helpRequest.getArea().equals(area1) && helpRequest.getHelperid().equals(helperid1) && helpRequest.getRequesterid().equals(requesterid1)) {
+                        counter++;
+                        if (helpRequest.getStatus().equals("Sent"))
+                            Toast.makeText(HelpBrowserActivity.this, "Wysłałeś już taką prośbę o pomoc. Musisz poczekać na zaakceptowanie jej przez drugą osobę.", Toast.LENGTH_LONG).show();
+                        else if (helpRequest.getStatus().equals("Active"))
+                            Toast.makeText(HelpBrowserActivity.this, "Ta osoba udziela Ci już pomocy w tym obszarze. Jeżeli chcesz poprosić o kolejną, musisz zamknąć poprzednią prośbę.", Toast.LENGTH_LONG).show();
                     }
-                    if (counter == 0) {
-                        HelpRequest newHelpRequest = new HelpRequest(area1, helperid1, requesterid1, "Sent", date);
-                        mDatabaseReference.child("HelpRequests").push().setValue(newHelpRequest);
-                        Toast.makeText(HelpBrowserActivity.this, "Wysłano prośbę o pomoc.", Toast.LENGTH_LONG).show();
-                    }
+                }
+                if (counter == 0) {
+                    HelpRequest newHelpRequest = new HelpRequest(area1, helperid1, requesterid1, "Sent", date);
+                    mDatabaseReference.child("HelpRequests").push().setValue(newHelpRequest);
+                    Toast.makeText(HelpBrowserActivity.this, "Wysłano prośbę o pomoc.", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
