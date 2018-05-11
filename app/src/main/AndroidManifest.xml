@@ -32,9 +32,9 @@
         <activity
             android:name=".HelpBrowserActivity"
             android:label="@string/title_activity_help_browser"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".RegisterUserActivity"></activity>
     </application>
 
 </manifest>
