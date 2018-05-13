@@ -35,6 +35,7 @@ public class ChatFragment extends Fragment {
     private DatabaseReference mHelpersDatabase;
     private FirebaseAuth mAuth;
     private String mCurrentUserId;
+    private String mCurrentName;
     private View mMainView;
 
 
@@ -75,21 +76,47 @@ public class ChatFragment extends Fragment {
 
         Query conversationQuery = mConvDatabase.orderByChild("timestamp");
 
-        FirebaseRecyclerAdapter<Conv, ConvViewHolder> firebaseConvAdapter = new FirebaseRecyclerAdapter<Conv, ConvViewHolder>(
-                Conv.class,
-                R.layout.single_user_layout,
-                ConvViewHolder.class,
-                conversationQuery
-        )
+        FirebaseRecyclerAdapter<Conv, ConvViewHolder> firebaseConvAdapter = new FirebaseRecyclerAdapter<Conv, ConvViewHolder>(Conv.class,R.layout.single_user_layout,ConvViewHolder.class, conversationQuery)
         {
             @Override
             protected void populateViewHolder(final ConvViewHolder convViewHolder, final Conv conv, int i) {
 
-
-
                 final String list_user_id = getRef(i).getKey();
 
                 Query lastMessageQuery = mMessageDatabase.child(list_user_id).limitToLast(1);
+
+                mHelpersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        final String userName = dataSnapshot.child("name").getValue().toString();
+                        final String userID = dataSnapshot.getKey().toString();
+
+                        if(!userID.equals(mCurrentUserId)) {
+                            convViewHolder.setName(userName);
+
+                            convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                    chatIntent.putExtra("user_id", list_user_id);
+                                    startActivity(chatIntent);
+
+                                }
+                            });
+                        }else
+                        {
+                           convViewHolder.hide(true);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 lastMessageQuery.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -120,41 +147,13 @@ public class ChatFragment extends Fragment {
 
                     }
                 });
-
-
-                mHelpersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        final String userName = dataSnapshot.child("name").getValue().toString();
-
-                        convViewHolder.setName(userName);
-
-                        convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-
-                                Intent chatIntent = new Intent(getContext(), ChatActivity.class);
-                                chatIntent.putExtra("user_id", list_user_id);
-                                startActivity(chatIntent);
-
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
             }
+
+
         };
 
         mConvList.setAdapter(firebaseConvAdapter);
+
 
     }
 
@@ -189,6 +188,9 @@ public class ChatFragment extends Fragment {
 
         }
 
+        public void hide(boolean hide) {
+            mView.setVisibility(hide ? View.GONE : View.VISIBLE);
+        }
 
     }
 
