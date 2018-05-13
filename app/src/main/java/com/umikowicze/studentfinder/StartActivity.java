@@ -66,9 +66,12 @@ public class StartActivity extends AppCompatActivity {
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                                //Here will be switch for ReqistrationPage
+                //Toast.makeText(getApplicationContext(), "It will be here in future" , Toast.LENGTH_SHORT).show();
 
-                //Here will be switch for ReqistrationPage
-                Toast.makeText(getApplicationContext(), "It will be here in future" , Toast.LENGTH_SHORT).show();
+                Intent registerIntent = new Intent(StartActivity.this, RegisterUserActivity.class );
+                startActivity(registerIntent);
+                finish();
             }
         });
     }

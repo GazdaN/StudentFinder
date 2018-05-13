@@ -20,4 +20,6 @@
     <string name="change_name_button">Change name</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_help_browser">HelpBrowserActivity</string>
+
+
 </resources>
