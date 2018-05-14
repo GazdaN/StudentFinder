@@ -81,6 +81,7 @@ public class ChatFragment extends Fragment {
             @Override
             protected void populateViewHolder(final ConvViewHolder convViewHolder, final Conv conv, int i) {
 
+
                 final String list_user_id = getRef(i).getKey();
 
                 Query lastMessageQuery = mMessageDatabase.child(list_user_id).limitToLast(1);
@@ -106,9 +107,7 @@ public class ChatFragment extends Fragment {
                             });
                         }else
                         {
-                          // convViewHolder.hide(true);
-                            convViewHolder.mView.setSystemUiVisibility(View.GONE);
-                            convViewHolder.mView.setVisibility(View.GONE);
+                           convViewHolder.hide();
                         }
 
 
@@ -186,17 +185,18 @@ public class ChatFragment extends Fragment {
 
         public void setName(String name){
 
-            userNameView = (TextView) mView.findViewById(R.id.userName);
+            userNameView =  mView.findViewById(R.id.userName);
             userNameView.setText(name);
 
         }
 
-        public void hide(boolean hide) {
-            userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
-            userNameView = (TextView) mView.findViewById(R.id.userName);
+        public void hide() {
+            userLastMessage =  mView.findViewById(R.id.lastMessage);
+            userNameView =  mView.findViewById(R.id.userName);
             mView.setVisibility(View.GONE);
-            userLastMessage.setHeight(0);
-            userNameView.setHeight(0);
+            android.view.ViewGroup.LayoutParams params = mView.getLayoutParams();
+            params.height = 0;
+            mView.setLayoutParams(params);
         }
 
     }
