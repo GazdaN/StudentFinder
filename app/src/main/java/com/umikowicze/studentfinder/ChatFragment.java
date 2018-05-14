@@ -106,7 +106,9 @@ public class ChatFragment extends Fragment {
                             });
                         }else
                         {
-                           convViewHolder.hide(true);
+                          // convViewHolder.hide(true);
+                            convViewHolder.mView.setSystemUiVisibility(View.GONE);
+                            convViewHolder.mView.setVisibility(View.GONE);
                         }
 
 
@@ -160,17 +162,18 @@ public class ChatFragment extends Fragment {
     public static class ConvViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
+        TextView userLastMessage;
+        TextView userNameView;
 
         public ConvViewHolder(View itemView) {
             super(itemView);
-
             mView = itemView;
 
         }
 
         public void setMessage(String message, boolean isSeen){
 
-            TextView userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
+            userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
             userLastMessage.setText(message);
 
             if(!isSeen){
@@ -183,13 +186,17 @@ public class ChatFragment extends Fragment {
 
         public void setName(String name){
 
-            TextView userNameView = (TextView) mView.findViewById(R.id.userName);
+            userNameView = (TextView) mView.findViewById(R.id.userName);
             userNameView.setText(name);
 
         }
 
         public void hide(boolean hide) {
-            mView.setVisibility(hide ? View.GONE : View.VISIBLE);
+            userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
+            userNameView = (TextView) mView.findViewById(R.id.userName);
+            mView.setVisibility(View.GONE);
+            userLastMessage.setHeight(0);
+            userNameView.setHeight(0);
         }
 
     }
