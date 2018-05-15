@@ -118,8 +118,15 @@ public class LessonRequestFragment extends Fragment {
     }
 
     public void getRequestsToProcess() {
+        mFirebaseReference = null;
+        mDatabaseReference = null;
+
+        mFirebaseReference = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseReference.getReference();
+
         helpRequestAdapter.clear();
         Query query = mDatabaseReference.child("HelpRequests");
+        query.keepSynced(true);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
