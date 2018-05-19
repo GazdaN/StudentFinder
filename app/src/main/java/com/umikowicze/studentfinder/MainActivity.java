@@ -106,21 +106,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 HelpRequest helpRequest = dataSnapshot.getValue(HelpRequest.class);
-                if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) &&
-                    helpRequest.getStatus().equals("Sent")) {
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                        if (helpRequest.getStatus().equals("Sent")) {
 
-                    Calendar requestDate = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm aa");
-                    try {
-                        requestDate.setTime(sdf.parse(helpRequest.getDatetime()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if (requestDate.getTimeInMillis() > lastDateTime) {
-                        createNewHelpRequestNotification(helpRequest);
-                        Calendar nowDate = Calendar.getInstance();
-                        lastDateTime = nowDate.getTimeInMillis();
-                    }
+                            Calendar requestDate = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm aa");
+                            try {
+                                requestDate.setTime(sdf.parse(helpRequest.getDatetime()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (requestDate.getTimeInMillis() > lastDateTime) {
+                                createNewHelpRequestNotification(helpRequest);
+                                Calendar nowDate = Calendar.getInstance();
+                                lastDateTime = nowDate.getTimeInMillis();
+                            }
+                        }
                 }
             }
 
