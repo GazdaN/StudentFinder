@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -127,8 +130,10 @@ public class ChatFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         final String userName = dataSnapshot.child("name").getValue().toString();
+                        final String imageUrl = dataSnapshot.child("photoUrl").getValue().toString();
 
                         convViewHolder.setName(userName);
+                        convViewHolder.setImage(imageUrl);
 
                         convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -187,6 +192,11 @@ public class ChatFragment extends Fragment {
             TextView userNameView = (TextView) mView.findViewById(R.id.userName);
             userNameView.setText(name);
 
+        }
+
+        public void setImage(String imageUrl) {
+            CircleImageView photoImageView = mView.findViewById(R.id.userImage);
+            Glide.with(photoImageView.getContext()).load(imageUrl).into(photoImageView);
         }
 
 
