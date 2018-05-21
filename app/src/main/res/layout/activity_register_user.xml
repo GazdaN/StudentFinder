@@ -12,11 +12,13 @@
         android:layout_marginTop="30dp"
         android:orientation="vertical">
 
-        <ImageView
+        <ImageButton
+            android:id="@+id/photo_select"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/lupa" />
+            android:src="@drawable/ic_photo_select" />
+
 
         <EditText
             android:id="@+id/email"
@@ -109,8 +111,9 @@
             android:layout_marginTop="16dp"
             android:textSize="18dp"
             android:text="REGISTER"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"/>
+            android:background="@color/buttonColor"
+            android:textColor="@color/textColor"
+            />
 
     </LinearLayout>
 

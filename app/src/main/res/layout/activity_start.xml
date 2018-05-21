@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/lupa"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
     <TextView
         android:id="@+id/startActivityTextView"
         android:layout_width="wrap_content"
@@ -20,6 +28,8 @@
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/buttonColor"
+        android:textColor="@color/textColor"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="47dp"
@@ -27,6 +37,8 @@
 
     <Button
         android:id="@+id/loginButton"
+        android:background="@color/buttonColor"
+        android:textColor="@color/textColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -37,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="108dp">
+        android:layout_marginTop="108dp"
+        >
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/emailTextLayout"
