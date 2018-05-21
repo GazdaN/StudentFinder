@@ -20,11 +20,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
@@ -42,7 +49,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     private boolean physics_area;
     private boolean coding_area;
     private boolean electronics_area;
-
+    private DatabaseReference mRootReference;
     private Button registerButton;
     private ImageButton mPhotoPickerButton;
 
@@ -84,7 +91,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 email = inputEmail.getText().toString().trim();
                 password = inputPassword.getText().toString().trim();
                 nickName = inputNickName.getText().toString().trim();
-
+                photoUrl = "photoURL";
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -115,9 +122,8 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     private void registerUser(String mEmail, String mphotoUrl, String mPassword, String mNickName) {
 
-        // Helper helper = new Helper(mNickName, mphotoUrl, mStars, mRatings, mLocation );
-        //mDataBase= FirebaseDatabase.getInstance().getReference();
-        //mDataBase.child("Helpers").child("name").setValue(mNickName);
+       final String _mNickName = mNickName;
+       final String _mPhotoUrl = mphotoUrl;
 
         mphotoUrl = "fddsfsdf";
         auth.createUserWithEmailAndPassword(email, password)
@@ -127,8 +133,19 @@ public class RegisterUserActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             FirebaseUser user = auth.getCurrentUser();
-                            Intent mainIntent = new Intent(RegisterUserActivity.this, MainActivity.class);
+                            String CurrentUserID = user.getUid();
+                             Helper helper = new Helper(_mNickName, _mPhotoUrl, (long)1.0 , (long)1.0, "false" );
+
+                            mRootReference = FirebaseDatabase.getInstance().getReference();
+                            mRootReference.child("Helpers").child(CurrentUserID).child("location").setValue(helper.getLocation());
+                            mRootReference.child("Helpers").child(CurrentUserID).child("name").setValue(helper.getName());
+                            mRootReference.child("Helpers").child(CurrentUserID).child("photoUrl").setValue(helper.getPhotoUrl());
+                            mRootReference.child("Helpers").child(CurrentUserID).child("ratings").setValue(helper.getRating());
+                            mRootReference.child("Helpers").child(CurrentUserID).child("stars").setValue(helper.getStars());
+
+
                             //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            Intent mainIntent = new Intent(RegisterUserActivity.this, MainActivity.class);
                             startActivity(mainIntent);
                             finish();
                         } else {
