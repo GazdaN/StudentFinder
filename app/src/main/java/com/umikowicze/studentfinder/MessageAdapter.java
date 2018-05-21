@@ -3,6 +3,7 @@ package com.umikowicze.studentfinder;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,22 +42,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String fromUser = messages.getFrom();
         String messageType = messages.getType();
 
-        if(fromUser.equals(currentUserId))
-        {
-            holder.messageText.setBackgroundResource(R.drawable.message_text_backround_sender);
-            holder.messageText.setTextColor(Color.BLACK);
-            holder.mProfileImage.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            holder.messageText.setBackgroundResource(R.drawable.message_text_background);
-            holder.messageText.setTextColor(Color.WHITE);
 
-        }
 
         if(messageType.equals("text")) {
             holder.messageText.setText(messages.getMessage());
             holder.mMessageImage.setVisibility(View.INVISIBLE);
+
+            if(fromUser.equals(currentUserId))
+            {
+                holder.messageText.setBackgroundResource(R.drawable.message_text_backround_sender);
+                holder.messageText.setTextColor(Color.BLACK);
+
+            }
+            else
+            {
+                holder.messageText.setBackgroundResource(R.drawable.message_text_background);
+                holder.messageText.setTextColor(Color.WHITE);
+            }
+
         }else
         {
             holder.messageText.setVisibility(View.INVISIBLE);

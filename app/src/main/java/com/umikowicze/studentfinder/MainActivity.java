@@ -5,13 +5,21 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import android.Manifest;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +47,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -47,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseReference;
     private ListView requestListView;
     private HelpRequestAdapter helpRequestAdapter;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
     private long lastDateTime;
 
     private static final int NOTIFICATION_ID = 1;
@@ -72,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("StudentFinder");
+
+        checkLocationPermission();
+
+
 
         initializeNewHelpRequestListener();
     }
@@ -228,5 +244,49 @@ public class MainActivity extends AppCompatActivity {
         Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
         startActivity(startIntent);
         finish();
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                   //Check location
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                            locationListener = new Location(getBaseContext());
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+                }
+
+                } else {
+
+                    //What will happen if user will not accept permissions?
+                }
+                return;
+            }
+
+        }
     }
 }
