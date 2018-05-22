@@ -1,5 +1,6 @@
 package com.umikowicze.studentfinder;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
     private EditText mNewMessageText;
     private ImageButton mAddStuffButton;
     private ImageButton mSendMessageButton;
-    private CircleImageView mcircleImageView;
+    private ImageView mImageView;
     private FirebaseAuth mAuth;
     private String mCurrentUserID;
     //Stuff for receiving messages
@@ -94,7 +97,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mChatUsername = dataSnapshot.child("name").getValue().toString();
+                String mChatUserPhoto = dataSnapshot.child("photoUrl").getValue().toString();
                 mDisplayName.setText(mChatUsername);
+                Glide.with(getBaseContext()).load(mChatUserPhoto).into(mImageView);
             }
 
             @Override
@@ -107,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         View actionBarView = layoutInflater.inflate(R.layout.chat_custom_bar, null);
 
         actionBar.setCustomView(actionBarView);
-        mcircleImageView = findViewById(R.id.customBarImage);
+        mImageView = findViewById(R.id.customBarImage);
         mDisplayName = findViewById(R.id.displayNameCustomBar);
         mNewMessageText = findViewById(R.id.newMessageEditTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
