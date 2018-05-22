@@ -115,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Stuff for receiving messages
 
-        mMessageAdapter = new MessageAdapter(messagesList);
+        mMessageAdapter = new MessageAdapter(messagesList,mCurrentUserID, mChatUserId);
         mMessageList = findViewById(R.id.messagesList);
         mLinearLayout = new LinearLayoutManager(this);
         mMessageList.setHasFixedSize(true);
