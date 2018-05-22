@@ -30,7 +30,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterUserActivity extends AppCompatActivity {
@@ -45,10 +47,10 @@ public class RegisterUserActivity extends AppCompatActivity {
     private String photoUrl;
     private EditText inputNickName;
     private String nickName;
-    private boolean mathematics_area;
-    private boolean physics_area;
-    private boolean coding_area;
-    private boolean electronics_area;
+    private boolean macierze_area;
+    private boolean java_area;
+    private boolean matlab_area;
+    private boolean routing_area;
     private DatabaseReference mRootReference;
     private Button registerButton;
     private ImageButton mPhotoPickerButton;
@@ -56,6 +58,8 @@ public class RegisterUserActivity extends AppCompatActivity {
     //Firebase instance variables
     private FirebaseAuth auth;
     private DatabaseReference mDataBase;
+
+    List<String> areaList = new ArrayList<String>();
 
 
     @Override
@@ -143,6 +147,10 @@ public class RegisterUserActivity extends AppCompatActivity {
                             mRootReference.child("Helpers").child(CurrentUserID).child("ratings").setValue(helper.getRating());
                             mRootReference.child("Helpers").child(CurrentUserID).child("stars").setValue(helper.getStars());
 
+                            for(String area : areaList){
+                                HelpOffer helpOffer = new HelpOffer(area, CurrentUserID);
+                                mRootReference.child("HelpOffers").push().setValue(helpOffer);
+                            }
 
                             //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             Intent mainIntent = new Intent(RegisterUserActivity.this, MainActivity.class);
@@ -166,31 +174,38 @@ public class RegisterUserActivity extends AppCompatActivity {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
+
+
         switch (view.getId()) {
-            case R.id.mathematics_checkbox:
+            case R.id.macierze_checkbox:
                 if (checked)
-                    mathematics_area = true;
+                { macierze_area = true;
+                    areaList.add("Macierze");}
                 else
-                    mathematics_area = false;
+                    macierze_area = false;
                 break;
-            case R.id.physics_checkbox:
+            case R.id.java_checkbox:
                 if (checked)
-                    physics_area = true;
+                {
+                    java_area = true;
+                    areaList.add("Java");}
                 else
-                    physics_area = false;
+                    java_area = false;
                 break;
 
-            case R.id.coding_checkbox:
+            case R.id.matlab_checkbox:
                 if (checked)
-                    coding_area = true;
+                {matlab_area = true;
+                    areaList.add("Matlab");}
                 else
-                    coding_area = false;
+                    matlab_area = false;
                 break;
-            case R.id.electronics_checkbox:
+            case R.id.routing_checkbox:
                 if (checked)
-                    electronics_area = true;
+                {routing_area = true;
+                    areaList.add("Routing");}
                 else
-                    electronics_area = false;
+                    routing_area = false;
                 break;
 
         }
