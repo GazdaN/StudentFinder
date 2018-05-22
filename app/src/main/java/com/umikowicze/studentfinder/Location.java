@@ -37,7 +37,6 @@ class Location implements LocationListener{
         String latitude = "Latitude: " + loc.getLatitude();
         Log.v(TAG, latitude);
     }
-
     @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
 }

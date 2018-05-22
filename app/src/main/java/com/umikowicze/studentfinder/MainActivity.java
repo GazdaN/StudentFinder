@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import android.Manifest;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -86,7 +87,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("StudentFinder");
 
         checkLocationPermission();
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new Location(getBaseContext());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, locationListener);
 
 
         initializeNewHelpRequestListener();
@@ -167,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Intent notificationIntent = new Intent(this,MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -277,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
                             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                             locationListener = new Location(getBaseContext());
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, locationListener);
                 }
 
                 } else {
