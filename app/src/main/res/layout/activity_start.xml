@@ -32,7 +32,7 @@
         android:textColor="@color/textColor"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="137dp"
         android:text="@string/need_an_account" />
 
     <Button

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:hint="Enter email"
+            android:hint="Wpisz email"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
 
@@ -38,7 +38,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:focusableInTouchMode="true"
-            android:hint="Enter password"
+            android:hint="Wpisz password"
             android:inputType="textPassword"
             android:maxLines="1" />
 
@@ -50,7 +50,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:focusableInTouchMode="true"
-            android:hint="Enter Nickname"
+            android:hint="Wpisz Nickname"
             android:maxLines="1" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:text="University: Warsaw University of Technology"
+            android:text="Universytet: Politechnika Warszawska"
             android:textSize="18sp" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:text="Faculty: Electronics and Information Technology"
+            android:text="Wydział: Elektroniki i technik informacyjnych"
             android:textSize="16sp" />
 
         <TextView
@@ -74,35 +74,35 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:text="Choose Your area:"
+            android:text="Wybierz swoje obszary:"
             android:textSize="16sp" />
 
         <CheckBox
-            android:id="@+id/mathematics_checkbox"
+            android:id="@+id/macierze_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mathematics" />
+            android:text="Macierze" />
 
         <CheckBox
-            android:id="@+id/physics_checkbox"
+            android:id="@+id/java_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onCheckboxClicked"
-            android:text="Physics" />
+            android:text="Java" />
 
         <CheckBox
-        android:id="@+id/coding_checkbox"
+        android:id="@+id/matlab_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onCheckboxClicked"
-        android:text="Coding" />
+        android:text="Matlab" />
 
         <CheckBox
-            android:id="@+id/electronics_checkbox"
+            android:id="@+id/routing_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onCheckboxClicked"
-            android:text="Electronics" />
+            android:text="Routing" />
 
         <Button
             android:id="@+id/register_button"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textSize="18dp"
-            android:text="REGISTER"
+            android:text="ZAREJESTRUJ"
             android:background="@color/buttonColor"
             android:textColor="@color/textColor"
             />
