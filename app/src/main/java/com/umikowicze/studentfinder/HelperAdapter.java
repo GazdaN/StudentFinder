@@ -48,7 +48,7 @@ public class HelperAdapter extends ArrayAdapter<Helper>{
         }
         else {
             onlineImageView.setImageResource(android.R.drawable.presence_offline);
-            onlineTextView.setText("Niedostępny");
+            onlineTextView.setText("Niedostępny w pobliżu wydziału");
         }
 
         ratingBar.setRating((float)helper.getRating()*5);

@@ -98,7 +98,9 @@ public class LessonRequestFragment extends Fragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        mDatabaseReference.child("HelpRequests").child(requestsKeys.get(Integer.toString(position)))
+                                .removeValue();
+                        getRequestsToProcess();
                         // Do nothing
                         dialog.dismiss();
                     }

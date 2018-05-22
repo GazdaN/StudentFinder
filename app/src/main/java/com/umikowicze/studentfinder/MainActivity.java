@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import android.Manifest;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseReference;
     private ListView requestListView;
     private HelpRequestAdapter helpRequestAdapter;
+    private FloatingActionButton floatingActionButton;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private long lastDateTime;
@@ -88,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("StudentFinder");
+
+        floatingActionButton = findViewById(R.id.floatingActionButton2);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, HelpBrowserActivity.class);
+                startActivity(intent);
+            }
+        });
 
         checkLocationPermission();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -237,11 +249,6 @@ public class MainActivity extends AppCompatActivity {
             sendToStart();
         }
 
-        else if(item.getItemId() == R.id.mainMenuSearchForHelpButton)
-        {
-            Intent intent = new Intent(MainActivity.this, HelpBrowserActivity.class);
-            startActivity(intent);
-        }
 
         if(item.getItemId() == R.id.settingsActivityButton)
         {
