@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,9 @@ public class LessonRequestFragment extends Fragment {
         requestListView = view.findViewById(R.id.requestListView);
         requestListView.setAdapter(helpRequestAdapter);
 
-        getRequestsToProcess();
+        helpRequestAdapter.clear();
+
+        //getRequestsToProcess();
 
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -115,8 +118,15 @@ public class LessonRequestFragment extends Fragment {
     }
 
     public void getRequestsToProcess() {
+        mFirebaseReference = null;
+        mDatabaseReference = null;
+
+        mFirebaseReference = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseReference.getReference();
+
         helpRequestAdapter.clear();
         Query query = mDatabaseReference.child("HelpRequests");
+        query.keepSynced(true);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
