@@ -183,7 +183,11 @@ public class ChatFragment extends Fragment {
         public void setMessage(String message, boolean isSeen){
 
             userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
-            userLastMessage.setText(message);
+
+            if(!message.startsWith("https://firebasestorage"))
+                userLastMessage.setText(message);
+            else
+                userLastMessage.setText("Wysłano zdjęcie.");
 
             if(!isSeen){
                 userLastMessage.setTypeface(userLastMessage.getTypeface(), Typeface.BOLD);
