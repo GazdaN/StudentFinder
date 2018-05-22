@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">StudentFinder</string>
     <string-array name="areas">
-        <item>Algebra liniowa</item>
-        <item>Analiza</item>
-        <item>Bazy danych</item>
-        <item>Cyfrowe przetwarzanie sygnałów</item>
-        <item>Szeregi Fouriera</item>
+        <item>Java</item>
+        <item>Matlab</item>
+        <item>Routing</item>
+        <item>Macierze</item>
     </string-array>
     <string name="need_an_account">Need an account?</string>
     <string name="welcome_text">Welcome to StudentFinder</string>
