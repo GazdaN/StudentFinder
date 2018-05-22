@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -127,20 +130,27 @@ public class ChatFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         final String userName = dataSnapshot.child("name").getValue().toString();
+                        final String userID = dataSnapshot.getKey().toString();
+                        final String imageUrl = dataSnapshot.child("photoUrl").getValue().toString();
 
+                        if(!userID.equals(mCurrentUserId)) {
+                            convViewHolder.setName(userName);
                         convViewHolder.setName(userName);
+                        convViewHolder.setImage(imageUrl);
 
-                        convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                            convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                    chatIntent.putExtra("user_id", list_user_id);
+                                    startActivity(chatIntent);
 
-
-                                Intent chatIntent = new Intent(getContext(), ChatActivity.class);
-                                chatIntent.putExtra("user_id", list_user_id);
-                                startActivity(chatIntent);
-
-                            }
-                        });
+                                }
+                            });
+                        }else
+                        {
+                           convViewHolder.hide();
+                        }
 
 
                     }
@@ -161,17 +171,18 @@ public class ChatFragment extends Fragment {
     public static class ConvViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
+        TextView userLastMessage;
+        TextView userNameView;
 
         public ConvViewHolder(View itemView) {
             super(itemView);
-
             mView = itemView;
 
         }
 
         public void setMessage(String message, boolean isSeen){
 
-            TextView userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
+            userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
             userLastMessage.setText(message);
 
             if(!isSeen){
@@ -184,11 +195,24 @@ public class ChatFragment extends Fragment {
 
         public void setName(String name){
 
-            TextView userNameView = (TextView) mView.findViewById(R.id.userName);
+            userNameView =  mView.findViewById(R.id.userName);
             userNameView.setText(name);
 
         }
 
+        public void setImage(String imageUrl) {
+            CircleImageView photoImageView = mView.findViewById(R.id.userImage);
+            Glide.with(photoImageView.getContext()).load(imageUrl).into(photoImageView);
+        }
+
+        public void hide() {
+            userLastMessage =  mView.findViewById(R.id.lastMessage);
+            userNameView =  mView.findViewById(R.id.userName);
+            mView.setVisibility(View.GONE);
+            android.view.ViewGroup.LayoutParams params = mView.getLayoutParams();
+            params.height = 0;
+            mView.setLayoutParams(params);
+        }
 
     }
 

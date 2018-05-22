@@ -92,29 +92,35 @@ public class HelpBrowserActivity extends AppCompatActivity{
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int counter = 0;
                         if (dataSnapshot.exists()) {
                             for (DataSnapshot dss : dataSnapshot.getChildren()) {
                                 final HelpOffer helpOffer = dss.getValue(HelpOffer.class);
-                                Query query2 = mDatabaseReference.child("Helpers").orderByKey().equalTo(helpOffer.getUserid());
-                                query2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (!helpOffer.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                    counter++;
+                                    Query query2 = mDatabaseReference.child("Helpers").orderByKey().equalTo(helpOffer.getUserid());
+                                    query2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        for (DataSnapshot dss2 : dataSnapshot.getChildren()) {
-                                            Helper helper = dss2.getValue(Helper.class);
-                                            helperAdapter.add(helper);
-                                            helpOffersUserIDs.put(Integer.toString(helperAdapter.getCount() - 1), helpOffer.getUserid());
+                                            for (DataSnapshot dss2 : dataSnapshot.getChildren()) {
+                                                Helper helper = dss2.getValue(Helper.class);
+
+                                                helperAdapter.add(helper);
+                                                helpOffersUserIDs.put(Integer.toString(helperAdapter.getCount() - 1), helpOffer.getUserid());
+                                            }
                                         }
-                                    }
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
 
-                                    }
-                                });
+                                        }
+                                    });
+                                }
                             }
                         }
-                        else
+                        if (counter == 0) {
                             Toast.makeText(HelpBrowserActivity.this, "Brak użytkowników oferujących pomoc w tym zakresie.", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
