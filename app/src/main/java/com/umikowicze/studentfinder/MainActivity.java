@@ -89,14 +89,22 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("StudentFinder");
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        //It will be null if user is not signed in -> it will switch screen to WelcomeScreen (startActivity)
+        if(currentUser == null)
+        {
+            sendToStart();
+        }
+
         checkLocationPermission();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new Location(getBaseContext());
+        locationListener = new Location(getBaseContext(), mAuth.getCurrentUser().getUid());
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
         
 
 
@@ -288,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
                             == PackageManager.PERMISSION_GRANTED) {
 
                             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                            locationListener = new Location(getBaseContext());
+                            locationListener = new Location(getBaseContext(),mAuth.getCurrentUser().getUid());
                             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, locationListener);
                 }
 
