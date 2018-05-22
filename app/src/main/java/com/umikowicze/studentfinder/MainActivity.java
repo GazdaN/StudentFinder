@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import android.Manifest;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static android.location.Location.distanceBetween;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, locationListener);
+        
+
 
 
         initializeNewHelpRequestListener();

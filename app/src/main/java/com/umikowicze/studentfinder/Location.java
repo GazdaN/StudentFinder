@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import static android.location.Location.distanceBetween;
 import static android.support.constraint.Constraints.TAG;
 
 class Location implements LocationListener{
@@ -36,6 +37,14 @@ class Location implements LocationListener{
         Log.v(TAG, longitude);
         String latitude = "Latitude: " + loc.getLatitude();
         Log.v(TAG, latitude);
+
+         float[] dist = new float[1];
+
+         distanceBetween(loc.getLatitude(),loc.getLongitude(),52.219071,21.011797,dist);
+
+         if(dist[0]/1000 > 0.3){
+             Toast.makeText(context, "Daleko od uczelni", Toast.LENGTH_LONG).show();
+         }
     }
     @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
