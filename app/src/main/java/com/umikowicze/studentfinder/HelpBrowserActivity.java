@@ -182,10 +182,14 @@ public class HelpBrowserActivity extends AppCompatActivity{
                 int counter = 0;
                 for (DataSnapshot dss : dataSnapshot.getChildren()) {
                     final HelpRequest helpRequest = dss.getValue(HelpRequest.class);
-                    if (helpRequest.getArea().equals(area1) && helpRequest.getHelperid().equals(helperid1) && helpRequest.getRequesterid().equals(requesterid1)) {
+                    if (helpRequest.getHelperid().equals(requesterid1) && helpRequest.getRequesterid().equals(helperid1)) {
+                        counter++;
+                        Toast.makeText(HelpBrowserActivity.this, "Udzielasz tej osobie pomocy. Możesz poprosić ją o pomoc w czacie.", Toast.LENGTH_LONG).show();
+                    }
+                    else if (helpRequest.getHelperid().equals(helperid1) && helpRequest.getRequesterid().equals(requesterid1)) {
                         counter++;
                         if (helpRequest.getStatus().equals("Sent"))
-                            Toast.makeText(HelpBrowserActivity.this, "Wysłałeś już taką prośbę o pomoc. Musisz poczekać na zaakceptowanie jej przez drugą osobę.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(HelpBrowserActivity.this, "Wysłałeś już prośbę o pomoc tej osobie.", Toast.LENGTH_LONG).show();
                         else if (helpRequest.getStatus().equals("Active"))
                             Toast.makeText(HelpBrowserActivity.this, "Ta osoba udziela Ci już pomocy w tym obszarze. Jeżeli chcesz poprosić o kolejną, musisz zamknąć poprzednią prośbę.", Toast.LENGTH_LONG).show();
                     }

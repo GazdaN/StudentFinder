@@ -1,10 +1,13 @@
 package com.umikowicze.studentfinder;
 
 import android.app.Application;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -73,6 +77,14 @@ public class ChatActivity extends AppCompatActivity {
     private static final int GALLERY_PICK = 1;
     private StorageReference mImageStorage;
     private ProgressDialog mProgressDialog;
+    private ImageView endRequestButton;
+    private String requestID;
+    private boolean isCurrentUserHelper;
+    private float currentStars = 0;
+    private float currentRatings = 0;
+    private boolean isRated = false;
+    private long userRating = 0;
+    private long difference = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +129,196 @@ public class ChatActivity extends AppCompatActivity {
         mNewMessageText = findViewById(R.id.newMessageEditTextView);
         mAddStuffButton = findViewById(R.id.addStuffImageButton);
         mSendMessageButton = findViewById(R.id.sendMessageButton);
+
+        endRequestButton = findViewById(R.id.endRequestButton);
+        // Check who is helper and who is requester in chat
+        mRootReference.child("HelpRequests").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
+                        if (dss.child("helperid").getValue().toString().equals(mCurrentUserID)
+                                && dss.child("requesterid").getValue().toString().equals(mChatUserId)) {
+                            endRequestButton.setVisibility(View.INVISIBLE);
+                            endRequestButton.setClickable(false);
+                            isCurrentUserHelper = true;
+                            requestID = dss.getKey();
+                        }
+                        if (dss.child("requesterid").getValue().toString().equals(mCurrentUserID)
+                                && dss.child("helperid").getValue().toString().equals(mChatUserId)) {
+
+                            mRootReference.child("Ratings").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot dss : dataSnapshot.getChildren()) {
+                                            if (dss.exists())
+                                                if (dss.child("helperID").getValue().equals(mChatUserId)
+                                                        && dss.child("requesterID").getValue().equals(mCurrentUserID)) {
+                                                    isRated = true;
+                                                    userRating = (long) dss.child("rating").getValue();
+                                                }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            endRequestButton.setVisibility(View.VISIBLE);
+                            endRequestButton.setClickable(true);
+                            isCurrentUserHelper = false;
+                            requestID = dss.getKey();
+                            }
+                        }
+                    }
+                }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        endRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Context context = view.getContext();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setTitle("Jak oceniasz otrzymaną pomoc?");
+
+                LayoutInflater inflater = getLayoutInflater();
+                View v = inflater.inflate(R.layout.rating_bar, null);
+                builder.setView(v);
+                final RatingBar rating = (RatingBar)v.findViewById(R.id.ratingbar);
+
+                if (isRated)
+                    rating.setRating((float) userRating);
+
+                builder.setPositiveButton("Oceń!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final long stars = (long) rating.getRating();
+
+                        if (!isRated) {
+                            Query query = mRootReference.child("Helpers").child(mChatUserId);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        currentRatings = (long) dataSnapshot.child("ratings").getValue();
+                                        currentStars = (long) dataSnapshot.child("stars").getValue();
+
+                                        currentStars += stars;
+                                        currentRatings++;
+
+                                        mRootReference.child("Helpers").child(mChatUserId).child("ratings").setValue(currentRatings);
+                                        mRootReference.child("Helpers").child(mChatUserId).child("stars").setValue(currentStars);
+
+                                        Rating newRating = new Rating(mChatUserId, mCurrentUserID, stars);
+                                        mRootReference.child("Ratings").push().setValue(newRating);
+                                        isRated = true;
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else {
+                            mRootReference.child("Ratings").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot dss : dataSnapshot.getChildren()) {
+                                            if (dss.child("helperID").getValue().equals(mChatUserId)
+                                                    && dss.child("requesterID").getValue().equals(mCurrentUserID)) {
+                                                difference = stars - userRating;
+                                                userRating = stars;
+                                                String key = dss.getKey();
+                                                mRootReference.child("Ratings").child(key).child("rating").setValue(stars);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            Query query = mRootReference.child("Helpers").child(mChatUserId);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        currentStars = (long) dataSnapshot.child("stars").getValue();
+                                        currentStars += difference;
+                                        mRootReference.child("Helpers").child(mChatUserId).child("stars").setValue(currentStars);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+                builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                /*
+                builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TUTAJ RATING
+
+                        mRootReference.child("HelpRequests").child(requestID).removeValue();
+                        mRootReference.child("Chat").child(mChatUserId).child(mCurrentUserID).removeValue();
+                        mRootReference.child("Chat").child(mCurrentUserID).child(mChatUserId).removeValue();
+
+                        Intent mainActivityIntent = new Intent(context, MainActivity.class);
+                        startActivity(mainActivityIntent);
+                        dialog.dismiss();
+
+                    }
+                });
+
+                builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                */
+            }
+        });
 
         //Stuff for receiving messages
 

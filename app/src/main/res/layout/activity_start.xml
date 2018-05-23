@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/lupa"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"/>
-
     <TextView
         android:id="@+id/startActivityTextView"
         android:layout_width="wrap_content"
@@ -74,4 +66,5 @@
             android:hint="@string/password_input_hint"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
+
 </RelativeLayout>
