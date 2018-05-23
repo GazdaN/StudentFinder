@@ -133,7 +133,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public class MessageViewHolder extends RecyclerView.ViewHolder{
 
         public TextView messageText;
-        public ImageView mProfileImage;
+        public CircleImageView mProfileImage;
         public ImageView mMessageImage;
 
         public MessageViewHolder(View itemView) {
