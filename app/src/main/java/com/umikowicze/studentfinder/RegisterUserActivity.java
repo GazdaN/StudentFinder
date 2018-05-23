@@ -1,5 +1,6 @@
 package com.umikowicze.studentfinder;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -34,17 +35,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
     private static final String TAG = "mno";
-    private static final int RC_PHOTO_PICKER = 2;
 
     private EditText inputEmail;
     private String email;
     private EditText inputPassword;
     private String password;
-    private String photoUrl;
+    private String photoUrl = null;
     private EditText inputNickName;
     private String nickName;
     private boolean macierze_area;
@@ -54,6 +55,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     private DatabaseReference mRootReference;
     private Button registerButton;
     private ImageButton mPhotoPickerButton;
+    private static final int GALLERY_PICK = 1;
 
     //Firebase instance variables
     private FirebaseAuth auth;
@@ -74,18 +76,17 @@ public class RegisterUserActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.passwordd);
         inputNickName = (EditText) findViewById(R.id.nickName);
         registerButton = (Button) findViewById(R.id.register_button);
-//        mPhotoPickerButton = (ImageButton) findViewById(R.id.photo_select);
-//
-//        mPhotoPickerButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/jpeg");
-//                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-//                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
-//            }
-//        });
+        mPhotoPickerButton = (ImageButton) findViewById(R.id.photo_select);
+        mPhotoPickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
 
@@ -95,7 +96,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 email = inputEmail.getText().toString().trim();
                 password = inputPassword.getText().toString().trim();
                 nickName = inputNickName.getText().toString().trim();
-                photoUrl = "photoURL";
+
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -108,6 +109,10 @@ public class RegisterUserActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(nickName)) {
                     Toast.makeText(getApplicationContext(), "Enter nickname!", Toast.LENGTH_SHORT).show();
                     return;
+                }
+
+                if (photoUrl == null) {
+                    photoUrl = "https://firebasestorage.googleapis.com/v0/b/studentfinder-3e472.appspot.com/o/users%2Fuser.png?alt=media&token=fef38b18-4480-4917-83b5-4ab64b9cd1bb";
                 }
 
 
@@ -129,7 +134,6 @@ public class RegisterUserActivity extends AppCompatActivity {
        final String _mNickName = mNickName;
        final String _mPhotoUrl = mphotoUrl;
 
-        mphotoUrl = "fddsfsdf";
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -179,8 +183,10 @@ public class RegisterUserActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.macierze_checkbox:
                 if (checked)
-                { macierze_area = true;
-                    areaList.add("Macierze");}
+                {
+                    macierze_area = true;
+                    areaList.add("Macierze");
+                    }
                 else
                     macierze_area = false;
                 break;
@@ -212,33 +218,31 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
 
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
-//            final Uri selectedIamgeUri = data.getData();
-//
-//            //Refrence to store photo file
-//            StorageReference photoRef = mProfilePhotoRefrence.child(selectedIamgeUri.getLastPathSegment());
-//
-//            //Uploading photo file to Firebase storage
-//
-//
-//            photoRef.putFile(selectedIamgeUri).addOnSuccessListener
-//                    (this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
-//                            //TODO: Wyswietlanie zdjecia profilowego
-//                            //mPhotoPickerButton.setImageResource();
-//                        }
-//                    });
-//
-//
-//        }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
+            final Uri imageUri = data.getData();
 
+            //Refrence to store photo file
+            FirebaseStorage mFirebaseDatabase = FirebaseStorage.getInstance();
+            StorageReference mStorageReference = mFirebaseDatabase.getReference();
+            StorageReference photoRef = mStorageReference.child("users").child(UUID.randomUUID().toString() + ".jpg");
+
+            //Uploading photo file to Firebase storage
+
+            photoRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                    if (task.isSuccessful()) {
+                        photoUrl = task.getResult().getDownloadUrl().toString();
+                    }
+                }
+            });
+        }
     }
+}
 
 
 
