@@ -18,7 +18,7 @@
     <string name="settings_button_text">Ustawienia</string>
     <string name="change_name_button">Zmien imie</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_help_browser">HelpBrowserActivity</string>
+    <string name="title_activity_help_browser">Poproś o pomoc</string>
 
 
 </resources>

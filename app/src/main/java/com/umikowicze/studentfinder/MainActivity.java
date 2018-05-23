@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return;
             }
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 100, locationListener);
 
         }
     }
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
 
                             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                             locationListener = new Location(getBaseContext(),mAuth.getCurrentUser().getUid());
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 100, locationListener);
                 }
 
                 } else {
