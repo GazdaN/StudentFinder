@@ -51,11 +51,11 @@ class Location implements LocationListener{
          distanceBetween(loc.getLatitude(),loc.getLongitude(),52.219071,21.011797,dist);
 
          if(dist[0]/1000 > 1){
-             Toast.makeText(context, "Daleko od uczelni", Toast.LENGTH_LONG).show();
+             //Toast.makeText(context, "Daleko od uczelni", Toast.LENGTH_LONG).show();
              mRootReference.child("Helpers").child(mcurrentUserId).child("location").setValue(false);
          } else
          {
-             Toast.makeText(context, "Jestes w pobliżu uczelni", Toast.LENGTH_LONG).show();
+             //Toast.makeText(context, "Jestes w pobliżu uczelni", Toast.LENGTH_LONG).show();
              mRootReference.child("Helpers").child(mcurrentUserId).child("location").setValue(true);
          }
     }

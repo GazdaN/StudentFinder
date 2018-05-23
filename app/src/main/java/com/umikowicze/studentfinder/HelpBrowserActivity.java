@@ -60,7 +60,7 @@ public class HelpBrowserActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Search for help");
+        getSupportActionBar().setTitle("Poproś o pomoc");
 
         mFirebaseReference = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseReference.getReference();
