@@ -41,14 +41,10 @@ class Location implements LocationListener{
 
      @Override
      public void onLocationChanged(android.location.Location loc) {
-        Toast.makeText(
-                context,
-                "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                        + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+
+        /*
         String longitude = "Longitude: " + loc.getLongitude();
-        Log.v(TAG, longitude);
-        String latitude = "Latitude: " + loc.getLatitude();
-        Log.v(TAG, latitude);
+        String latitude = "Latitude: " + loc.getLatitude();*/
 
          float[] dist = new float[1];
 
