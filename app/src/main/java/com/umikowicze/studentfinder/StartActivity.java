@@ -52,8 +52,8 @@ public class StartActivity extends AppCompatActivity {
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password))
                 {
 
-                    mLoginProgress.setTitle("Logging in");
-                    mLoginProgress.setMessage("Please wait.");
+                    mLoginProgress.setTitle("Logowanie");
+                    mLoginProgress.setMessage("Proszę czekać...");
                     mLoginProgress.setCanceledOnTouchOutside(false);
                     mLoginProgress.show();
 
@@ -94,7 +94,7 @@ public class StartActivity extends AppCompatActivity {
                 else
                 {
                     mLoginProgress.hide();
-                    Toast.makeText(StartActivity.this, "Cannot Sign in. Please check your credentials and try again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(StartActivity.this, "Nie udało się zalogować. Sprawdź swoje dane logowanie.", Toast.LENGTH_LONG).show();
                 }
             }
         });

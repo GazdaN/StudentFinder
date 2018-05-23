@@ -38,7 +38,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:focusableInTouchMode="true"
-            android:hint="Wpisz password"
+            android:hint="Wpisz hasło"
             android:inputType="textPassword"
             android:maxLines="1" />
 
@@ -50,7 +50,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:focusableInTouchMode="true"
-            android:hint="Wpisz Nickname"
+            android:hint="Wpisz wyświetlaną nazwę"
             android:maxLines="1" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:text="Universytet: Politechnika Warszawska"
+            android:text="Uczelnia: Politechnika Warszawska"
             android:textSize="18sp" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:text="Wydział: Elektroniki i technik informacyjnych"
+            android:text="Wydział: Elektroniki i Technik Informacyjnych"
             android:textSize="16sp" />
 
         <TextView

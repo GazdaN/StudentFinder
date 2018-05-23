@@ -65,14 +65,14 @@ public class AccountSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //if we want to pass some information to next activity we use intent.putExtra and we receive it by getIntent().getStringExtra...
-                Toast.makeText(AccountSettingsActivity.this, "Feature of changing name will be available in future", Toast.LENGTH_LONG).show();
+                Toast.makeText(AccountSettingsActivity.this, "Ten ficzer będzie dostępny później", Toast.LENGTH_LONG).show();
             }
         });
 
         mChangeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AccountSettingsActivity.this, "Feature of changing image will be available in future", Toast.LENGTH_LONG).show();
+                Toast.makeText(AccountSettingsActivity.this, "Ten ficzer będzie dostępny później", Toast.LENGTH_LONG).show();
             }
         });
 

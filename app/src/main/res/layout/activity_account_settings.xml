@@ -12,7 +12,7 @@
         android:layout_width="258dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Display name"
+        android:text="Imie"
         android:textColor="@android:color/white" />
 
     <Button
@@ -31,6 +31,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="114dp"
-        android:text="Change image" />
+        android:text="Zmien zdjęcie" />
 
 </RelativeLayout>

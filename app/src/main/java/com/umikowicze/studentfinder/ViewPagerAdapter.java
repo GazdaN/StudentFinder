@@ -35,9 +35,9 @@ class ViewPagerAdapter extends FragmentPagerAdapter{
         switch (position)
         {
             case 0:
-                return "LESSON REQUESTS";
+                return "BŁAGANIA O POMOC";
             case 1:
-                return "CHAT";
+                return "CZAT";
             default:
                     return null;
         }

@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     private EditText mNewMessageText;
     private ImageButton mAddStuffButton;
     private ImageButton mSendMessageButton;
-    private ImageView mImageView;
+    private CircleImageView mImageView;
     private FirebaseAuth mAuth;
     private String mCurrentUserID;
     //Stuff for receiving messages

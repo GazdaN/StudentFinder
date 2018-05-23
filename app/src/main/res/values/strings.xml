@@ -6,17 +6,17 @@
         <item>Routing</item>
         <item>Macierze</item>
     </string-array>
-    <string name="need_an_account">Need an account?</string>
-    <string name="welcome_text">Welcome to StudentFinder</string>
+    <string name="need_an_account">Nie masz konta??</string>
+    <string name="welcome_text">Witaj w StudentFinder!</string>
     <string name="main_page">Main page</string>
     <string name="email_input_hint">Email</string>
-    <string name="password_input_hint">Password</string>
-    <string name="log_out_button_text">Log Out</string>
+    <string name="password_input_hint">Hasło</string>
+    <string name="log_out_button_text">Wyloguj</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="settings_button_text">Settings</string>
-    <string name="change_name_button">Change name</string>
+    <string name="settings_button_text">Ustawienia</string>
+    <string name="change_name_button">Zmien imie</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_help_browser">HelpBrowserActivity</string>
 

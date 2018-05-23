@@ -109,13 +109,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if(fromUser.equals(currentUserId))
         {
             holder.messageText.setVisibility(View.INVISIBLE);
-            Picasso.get().load(messages.getMessage()).placeholder(R.drawable.star24).into(holder.mMessageImage);
+            Picasso.get().load(messages.getMessage()).placeholder(R.drawable.image_loading).into(holder.mMessageImage);
             Glide.with(holder.mProfileImage.getContext()).load(mimageUrlCurrentUser).into(holder.mProfileImage);
         }
         else
         {
             holder.messageText.setVisibility(View.INVISIBLE);
-            Picasso.get().load(messages.getMessage()).placeholder(R.drawable.star24).into(holder.mMessageImage);
+            Picasso.get().load(messages.getMessage()).placeholder(R.drawable.image_loading).into(holder.mMessageImage);
             Glide.with(holder.mProfileImage.getContext()).load(mimageUrlChatUser).into(holder.mProfileImage);
         }
 
@@ -133,7 +133,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public class MessageViewHolder extends RecyclerView.ViewHolder{
 
         public TextView messageText;
-        public ImageView mProfileImage;
+        public CircleImageView mProfileImage;
         public ImageView mMessageImage;
 
         public MessageViewHolder(View itemView) {

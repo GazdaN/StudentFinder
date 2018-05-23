@@ -98,16 +98,16 @@ public class RegisterUserActivity extends AppCompatActivity {
                 nickName = inputNickName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wprowadź email", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wprowadź hasło", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(nickName)) {
-                    Toast.makeText(getApplicationContext(), "Enter nickname!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wprowadź wyświetlaną nazwę", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -163,7 +163,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         } else {
                             // If registering in fails
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterUserActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterUserActivity.this, "Utworzenie konta nie powiodło się",
                                     Toast.LENGTH_SHORT).show();
                             // updateUI(null);
                         }
