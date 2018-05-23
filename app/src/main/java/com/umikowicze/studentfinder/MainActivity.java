@@ -73,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String requesterName = null;
 
+    public static boolean ifDestroyed = false;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ifDestroyed = true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        ifDestroyed = false;
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 

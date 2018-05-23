@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -148,7 +149,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                             mRootReference.child("Helpers").child(CurrentUserID).child("location").setValue(helper.getLocation());
                             mRootReference.child("Helpers").child(CurrentUserID).child("name").setValue(helper.getName());
                             mRootReference.child("Helpers").child(CurrentUserID).child("photoUrl").setValue(helper.getPhotoUrl());
-                            mRootReference.child("Helpers").child(CurrentUserID).child("ratings").setValue(helper.getRating());
+                            mRootReference.child("Helpers").child(CurrentUserID).child("ratings").setValue(helper.getRatings());
                             mRootReference.child("Helpers").child(CurrentUserID).child("stars").setValue(helper.getStars());
 
                             for(String area : areaList){
@@ -237,6 +238,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         photoUrl = task.getResult().getDownloadUrl().toString();
+                        Glide.with(mPhotoPickerButton.getContext()).load(photoUrl).into(mPhotoPickerButton);
                     }
                 }
             });

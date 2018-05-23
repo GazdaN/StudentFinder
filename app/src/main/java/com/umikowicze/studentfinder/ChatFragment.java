@@ -71,6 +71,7 @@ public class ChatFragment extends Fragment {
 
       return mMainView;
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -136,8 +137,8 @@ public class ChatFragment extends Fragment {
 
                         if(!userID.equals(mCurrentUserId)) {
                             convViewHolder.setName(userName);
-                        convViewHolder.setName(userName);
-                        convViewHolder.setImage(imageUrl);
+                            convViewHolder.setName(userName);
+                            convViewHolder.setImage(imageUrl);
 
                             convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -207,7 +208,8 @@ public class ChatFragment extends Fragment {
 
         public void setImage(String imageUrl) {
             CircleImageView photoImageView = mView.findViewById(R.id.userImage);
-            Glide.with(photoImageView.getContext()).load(imageUrl).into(photoImageView);
+            if (MainActivity.ifDestroyed == false)
+                Glide.with(photoImageView).load(imageUrl).into(photoImageView);
         }
 
         public void hide() {

@@ -211,8 +211,8 @@ public class ChatActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
-                                        currentRatings = (float)((long) dataSnapshot.child("ratings").getValue());
-                                        currentStars = (float) ((long) dataSnapshot.child("stars").getValue());
+                                        currentRatings = Float.valueOf(dataSnapshot.child("ratings").getValue().toString());
+                                        currentStars = Float.valueOf(dataSnapshot.child("stars").getValue().toString());
 
                                         currentStars += stars;
                                         currentRatings++;
