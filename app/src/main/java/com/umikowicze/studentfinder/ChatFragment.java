@@ -99,7 +99,8 @@ public class ChatFragment extends Fragment {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                         String data = dataSnapshot.child("message").getValue().toString();
-                        convViewHolder.setMessage(data, conv.isSeen());
+                        String type = dataSnapshot.child("type").getValue().toString();
+                        convViewHolder.setMessage(data, conv.isSeen(), type);
 
                     }
 
@@ -180,10 +181,14 @@ public class ChatFragment extends Fragment {
 
         }
 
-        public void setMessage(String message, boolean isSeen){
+        public void setMessage(String message, boolean isSeen, String type){
 
             userLastMessage = (TextView) mView.findViewById(R.id.lastMessage);
-            userLastMessage.setText(message);
+
+            if(type.endsWith("text"))
+                userLastMessage.setText(message);
+            else
+                userLastMessage.setText("Wysłano zdjęcie.");
 
             if(!isSeen){
                 userLastMessage.setTypeface(userLastMessage.getTypeface(), Typeface.BOLD);

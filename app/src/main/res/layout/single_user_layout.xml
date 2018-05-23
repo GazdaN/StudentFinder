@@ -32,7 +32,7 @@
         android:layout_alignStart="@+id/userName"
         android:layout_below="@+id/userName"
         android:layout_marginTop="10dp"
-        android:text="User default Status" />
+        android:text="*Przywitaj sie!*" />
 
 
 </RelativeLayout>

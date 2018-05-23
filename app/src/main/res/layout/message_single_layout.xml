@@ -6,10 +6,10 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/messageProfileImageLayout"
         android:layout_width="62dp"
-        android:layout_height="60dp"
+        android:layout_height="62dp"
         android:src="@android:drawable/ic_menu_gallery" />
 
     <TextView
