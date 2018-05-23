@@ -88,43 +88,41 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
 
-        mToolbar = findViewById(R.id.main_page_actionbar);
-        //Tabs
-        mViewPager = findViewById(R.id.viewTabPager);
-        //Initiation of tabs
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mViewPagerAdapter);
+            mToolbar = findViewById(R.id.main_page_actionbar);
+            //Tabs
+            mViewPager = findViewById(R.id.viewTabPager);
+            //Initiation of tabs
+            mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+            mViewPager.setAdapter(mViewPagerAdapter);
 
-        mTabLayout = findViewById(R.id.main_tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("StudentFinder");
+            mTabLayout = findViewById(R.id.main_tabs);
+            mTabLayout.setupWithViewPager(mViewPager);
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setTitle("StudentFinder");
 
+            initializeNewHelpRequestListener();
+            floatingActionButton = findViewById(R.id.floatingActionButton2);
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, HelpBrowserActivity.class);
+                    startActivity(intent);
+                }
+            });
+            checkLocationPermission();
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationListener = new Location(getBaseContext(), mAuth.getCurrentUser().getUid());
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        floatingActionButton = findViewById(R.id.floatingActionButton2);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HelpBrowserActivity.class);
-                startActivity(intent);
+                return;
             }
-        });
-        checkLocationPermission();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new Location(getBaseContext(), mAuth.getCurrentUser().getUid());
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
 
-            return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
-        
-
-
-
-        initializeNewHelpRequestListener();}
     }
 
     private void initializeNewHelpRequestListener() {
+        final Context context = this;
         Calendar nowDate = Calendar.getInstance();
         lastDateTime = nowDate.getTimeInMillis();
 
@@ -141,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     if (helpRequest.getHelperid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                         if (helpRequest.getStatus().equals("Sent")) {
-
                             Calendar requestDate = Calendar.getInstance();
                             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm aa");
                             try {
@@ -181,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createNewHelpRequestNotification(HelpRequest helpRequest) {
+        System.out.println("Powiadomienie");
+
         Query query = mDatabaseReference.child("Helpers").orderByKey().equalTo(helpRequest.getRequesterid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -213,10 +212,11 @@ public class MainActivity extends AppCompatActivity {
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);
             notificationManager.createNotificationChannel(notificationChannel);
+            System.out.println("Powiadomienie na oreo");
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.lupa)
                 .setContentTitle(requesterName)
                 .setContentText("Prośba o pomoc w obszarze: " + helpRequest.getArea())
                 .setAutoCancel(true)
