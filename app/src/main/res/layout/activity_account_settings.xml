@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#FFFFFF"
     tools:context=".AccountSettingsActivity">
 
     <TextView
@@ -12,25 +12,29 @@
         android:layout_width="258dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Imie"
-        android:textColor="@android:color/white" />
+        android:gravity="center_horizontal"
+        android:text="CONTENT IN PROGRESS"
+        android:textSize="25dp"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/changeDisplayNameButton"
-        android:layout_width="wrap_content"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="53dp"
+        android:background="@color/buttonColor"
         android:text="@string/change_name_button" />
 
     <Button
         android:id="@+id/changeImageButton"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="114dp"
+        android:background="@color/buttonColor"
         android:text="Zmien zdjęcie" />
 
 </RelativeLayout>

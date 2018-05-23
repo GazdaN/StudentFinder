@@ -9,13 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <ImageButton
             android:id="@+id/photo_select"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_marginTop="16dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_photo_select" />
 
@@ -75,7 +77,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
             android:text="Wybierz swoje obszary:"
-            android:textSize="16sp" />
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/macierze_checkbox"
@@ -91,11 +94,11 @@
             android:text="Java" />
 
         <CheckBox
-        android:id="@+id/matlab_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onCheckboxClicked"
-        android:text="Matlab" />
+            android:id="@+id/matlab_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckboxClicked"
+            android:text="Matlab" />
 
         <CheckBox
             android:id="@+id/routing_checkbox"
@@ -106,14 +109,15 @@
 
         <Button
             android:id="@+id/register_button"
-            android:layout_width="match_parent"
+            android:layout_width="147dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:textSize="18dp"
-            android:text="ZAREJESTRUJ"
+            android:layout_marginBottom="10dp"
             android:background="@color/buttonColor"
+            android:text="ZAREJESTRUJ"
             android:textColor="@color/textColor"
-            />
+            android:textSize="18dp" />
 
     </LinearLayout>
 

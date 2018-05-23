@@ -6,7 +6,7 @@
         <item>Routing</item>
         <item>Macierze</item>
     </string-array>
-    <string name="need_an_account">Nie masz konta??</string>
+    <string name="need_an_account">Nie masz konta?</string>
     <string name="welcome_text">Witaj w StudentFinder!</string>
     <string name="main_page">Main page</string>
     <string name="email_input_hint">Email</string>
