@@ -3,9 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/settingsActivityButton"
-        android:title="@string/settings_button_text" />
+        android:title="@string/settings_button_text"
+        android:background="@color/buttonColor"/>
     <item
         android:id="@+id/mainMenuLogutButton"
-        android:title="@string/log_out_button_text" />
+        android:title="@string/log_out_button_text"
+        android:background="@color/buttonColor"/>
 
 </menu>
